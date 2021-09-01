@@ -1,0 +1,74 @@
+name: 'JSTS Quality'
+description: 'This action runs ESLint + Reviewdog 🐶 and Prettier.'
+inputs:
+  github_token:
+    description: 'The Github API token needed for Reviewdog and checks.'
+  working_directory:
+    description: Where is your package.json and therefore your node_modules located.
+    required: false
+    default: ''
+  prettier_target:
+    description: 'Where should Prettier look?'
+    required: false
+    default: './**/*'
+  eslint_target:
+    description: 'Where should ESLint look?'
+    required: false
+    default: '.'
+  file_extensions:
+    description: 'Which file extensions should be considered.'
+    required: false
+    default: '.js,.jsx,.ts,.tsx,.mjs'
+
+runs:
+  using: 'composite'
+  steps:
+
+    - name: Install Reviewdog
+      uses: reviewdog/action-setup@v1
+      with:
+        reviewdog_version: latest
+
+    - name: ESLint
+      shell: bash
+      run: |
+        node_modules/.bin/eslint \
+        --format checkstyle \
+        --no-error-on-unmatched-pattern \
+        --ext ${{inputs.file_extensions}} \
+        ${{inputs.eslint_target}} \
+        | reviewdog -f=checkstyle -name="eslint" -reporter=github-pr-check || true
+      working-directory: ${{ inputs.working_directory }}
+      env:
+        REVIEWDOG_GITHUB_API_TOKEN: ${{ inputs.github_token }}
+
+    - name: Prettier
+      id: prettier
+      shell: bash
+      working-directory: ${{ inputs.working_directory }}
+      run: |
+        if \
+        prettier_result="$(node_modules/.bin/prettier \
+        --no-error-on-unmatched-pattern \
+        --check ${{ inputs.prettier_target }}{${{ inputs.file_extensions }}} 2>&1 > /dev/null)"; \
+        then \
+        echo "::set-output name=prettier_status::success"; \
+        echo "::set-output name=prettier_summary::Everything looks good!"; \
+        echo "::set-output name=prettier_text_description::Nothing to complain about."; \
+        else \
+        echo "::set-output name=prettier_status::failure"; \
+        echo "::set-output name=prettier_summary::Forgot to run Prettier?"; \
+        echo "::set-output name=prettier_text_description::$(echo $prettier_result)"; \
+        fi;
+
+    - uses: LouisBrunner/checks-action@v1.1.1
+      with:
+        token: ${{ inputs.github_token }}
+        name: prettier
+        conclusion: ${{ steps.prettier.outputs.prettier_status }}
+        output: |
+          {"summary":"${{ steps.prettier.outputs.prettier_summary }}", "text_description":"${{ steps.prettier.outputs.prettier_text_description }}"}
+
+branding:
+  icon: 'terminal'
+  color: 'gray-dark'
