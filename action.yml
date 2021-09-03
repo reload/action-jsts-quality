@@ -43,31 +43,11 @@ runs:
         REVIEWDOG_GITHUB_API_TOKEN: ${{ inputs.github_token }}
 
     - name: Prettier
-      id: prettier
-      shell: bash
-      working-directory: ${{ inputs.working_directory }}
-      run: |
-        if \
-        prettier_result="$(node_modules/.bin/prettier \
-        --no-error-on-unmatched-pattern \
-        --check ${{ inputs.prettier_target }}{${{ inputs.file_extensions }}} 2>&1 > /dev/null)"; \
-        then \
-        echo "::set-output name=prettier_status::success"; \
-        echo "::set-output name=prettier_summary::Everything looks good!"; \
-        echo "::set-output name=prettier_text_description::Nothing to complain about."; \
-        else \
-        echo "::set-output name=prettier_status::failure"; \
-        echo "::set-output name=prettier_summary::Forgot to run Prettier?"; \
-        echo "::set-output name=prettier_text_description::$(echo $prettier_result)"; \
-        fi;
-
-    - uses: LouisBrunner/checks-action@v1.1.1
+      uses: reload/action-prettier
       with:
-        token: ${{ inputs.github_token }}
-        name: prettier
-        conclusion: ${{ steps.prettier.outputs.prettier_status }}
-        output: |
-          {"summary":"${{ steps.prettier.outputs.prettier_summary }}", "text_description":"${{ steps.prettier.outputs.prettier_text_description }}"}
+        github_token: ${{ inputs.github_token }}
+        working_directory: ${{ inputs.working_directory }}
+        prettier_args: ${{ inputs.prettier_target }}{${{ inputs.file_extensions }}}
 
 branding:
   icon: 'terminal'
