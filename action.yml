@@ -43,7 +43,7 @@ runs:
         REVIEWDOG_GITHUB_API_TOKEN: ${{ inputs.github_token }}
 
     - name: Prettier
-      uses: reload/action-prettier@main
+      uses: reload/action-prettier@1.0.0
       with:
         github_token: ${{ inputs.github_token }}
         working_directory: ${{ inputs.working_directory }}
