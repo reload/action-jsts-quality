@@ -47,7 +47,7 @@ jobs:
       run: npm ci
 
     - name: JSTS Quality
-      uses: reload/action-jsts-quality
+      uses: reload/action-jsts-quality@1.0.0
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
 ```
@@ -78,7 +78,7 @@ jobs:
       working-directory: ./web/themes/custom/custom-theme
 
     - name: JSTS Quality
-      uses: reload/action-jsts-quality
+      uses: reload/action-jsts-quality@1.0.0
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         working_directory: ./web/themes/custom/custom-theme/js
@@ -104,7 +104,7 @@ jobs:
       run: npm ci
 
     - name: JSTS Quality
-      uses: reload/action-jsts-quality
+      uses: reload/action-jsts-quality@1.0.0
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         file_extensions: '.ts,' # Default: '.js,.jsx,.ts,.tsx,.mjs'
@@ -130,7 +130,7 @@ jobs:
       run: npm ci
 
     - name: JSTS Quality
-      uses: reload/action-jsts-quality
+      uses: reload/action-jsts-quality@1.0.0
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         # Both of the specified targets have their origin at whatever
