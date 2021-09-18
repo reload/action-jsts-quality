@@ -8,7 +8,7 @@ GitHub action that yells if JS/TS formatting and linting is not up to snuff!
 Install [D(A)FT](https://github.com/reload/daft):
 
 ```sh
-npm install @reloaddk/drupal --save-dev
+npm install @reloaddk/daft --save-dev
 ```
 
 or the minimally required packages:

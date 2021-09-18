@@ -1,7 +1,7 @@
 {
   "name": "action-jsts-quality",
   "version": "1.0.0",
-  "devDependencies": {
-    "@reloaddk/drupal": "^0.1.0-beta.4"
+  "dependencies": {
+    "@reloaddk/daft": "^1.0.0"
   }
 }
