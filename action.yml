@@ -3,6 +3,7 @@ description: 'This action runs ESLint + Reviewdog 🐶 and Prettier.'
 inputs:
   github_token:
     description: 'The Github API token needed for Reviewdog and checks.'
+    required: true
   working_directory:
     description: Where is your package.json and therefore your node_modules located.
     required: false
