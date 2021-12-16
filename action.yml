@@ -33,7 +33,9 @@ runs:
     - name: ESLint
       shell: bash
       run: |
-        node_modules/.bin/eslint \
+        # Disable pipefail so it's the last command in a pipe that
+        # determines the overall exit code and not the first failing.
+        set +o pipefail
         # Try running the eslint command, so we'll fail if it can't run.
         $(npm bin)/eslint --version
 
@@ -42,7 +44,7 @@ runs:
         --no-error-on-unmatched-pattern \
         --ext ${{inputs.file_extensions}} \
         ${{inputs.eslint_target}} \
-        | reviewdog -f=checkstyle -name="eslint" -reporter=github-pr-check || true
+        | reviewdog -f=checkstyle -name="eslint" -reporter=github-pr-check
       working-directory: ${{ inputs.working_directory }}
       env:
         REVIEWDOG_GITHUB_API_TOKEN: ${{ inputs.github_token }}
