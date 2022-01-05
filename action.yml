@@ -3,6 +3,7 @@ description: 'This action runs ESLint + Reviewdog 🐶 and Prettier.'
 inputs:
   github_token:
     description: 'The Github API token needed for Reviewdog and checks.'
+    required: true
   working_directory:
     description: Where is your package.json and therefore your node_modules located.
     required: false
@@ -32,22 +33,27 @@ runs:
     - name: ESLint
       shell: bash
       run: |
-        node_modules/.bin/eslint \
+        # Disable pipefail so it's the last command in a pipe that
+        # determines the overall exit code and not the first failing.
+        set +o pipefail
+        # Try running the eslint command, so we'll fail if it can't run.
+        $(npm bin)/eslint --version
+
+        $(npm bin)/eslint \
         --format checkstyle \
         --no-error-on-unmatched-pattern \
         --ext ${{inputs.file_extensions}} \
         ${{inputs.eslint_target}} \
-        | reviewdog -f=checkstyle -name="eslint" -reporter=github-pr-check || true
+        | reviewdog -f=checkstyle -name="eslint" -reporter=github-pr-check
       working-directory: ${{ inputs.working_directory }}
       env:
         REVIEWDOG_GITHUB_API_TOKEN: ${{ inputs.github_token }}
 
     - name: Prettier
-      uses: reload/action-prettier@1.0.0
-      with:
-        github_token: ${{ inputs.github_token }}
-        working_directory: ${{ inputs.working_directory }}
-        prettier_args: ${{ inputs.prettier_target }}{${{ inputs.file_extensions }}}
+      shell: bash
+      run: |
+        $(npm bin)/prettier --no-error-on-unmatched-pattern --check "${{ inputs.prettier_target }}{${{ inputs.file_extensions }}}"
+      working-directory: ${{ inputs.working_directory }}
 
 branding:
   icon: 'terminal'
