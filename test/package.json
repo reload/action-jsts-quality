@@ -2,6 +2,6 @@
   "name": "action-jsts-quality",
   "version": "1.0.0",
   "dependencies": {
-    "@reloaddk/daft": "^1.0.0"
+    "@reloaddk/daft": "^1.3.1"
   }
 }
