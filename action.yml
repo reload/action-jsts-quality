@@ -37,9 +37,9 @@ runs:
         # determines the overall exit code and not the first failing.
         set +o pipefail
         # Try running the eslint command, so we'll fail if it can't run.
-        $(npm bin)/eslint --version
+        npm exec -- eslint --version
 
-        $(npm bin)/eslint \
+        npm exec -- eslint \
         --format checkstyle \
         --no-error-on-unmatched-pattern \
         --ext ${{inputs.file_extensions}} \
@@ -52,7 +52,7 @@ runs:
     - name: Prettier
       shell: bash
       run: |
-        $(npm bin)/prettier --no-error-on-unmatched-pattern --check "${{ inputs.prettier_target }}{${{ inputs.file_extensions }}}"
+        npm exec -- prettier --no-error-on-unmatched-pattern --check "${{ inputs.prettier_target }}{${{ inputs.file_extensions }}}"
       working-directory: ${{ inputs.working_directory }}
 
 branding:
