@@ -29,6 +29,8 @@ runs:
       uses: reviewdog/action-setup@v1
       with:
         reviewdog_version: latest
+      env:
+        REVIEWDOG_GITHUB_API_TOKEN: ${{ inputs.github_token }}
 
     - name: ESLint
       shell: bash
