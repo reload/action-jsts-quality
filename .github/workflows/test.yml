@@ -26,5 +26,5 @@ jobs:
     - name: JSTS Quality
       uses: ./
       with:
-        github_token: ${{ secrets.PAT_TOKEN }}
+        github_token: ${{ secrets.GITHUB_TOKEN }}
         working_directory: ./test
