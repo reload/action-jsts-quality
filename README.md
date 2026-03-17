@@ -5,13 +5,7 @@ GitHub action that yells if JS/TS formatting and linting is not up to snuff!
 
 [npm >= 7](https://github.blog/2021-02-02-npm-7-is-now-generally-available/)
 
-Install [D(A)FT](https://github.com/reload/daft):
-
-```sh
-npm install @reloaddk/daft --save-dev
-```
-
-or the minimally required packages:
+Install the required packages:
 
 ```sh
 npm install eslint prettier --save-dev

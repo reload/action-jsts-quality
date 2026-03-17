@@ -1,10 +1,23 @@
 {
   "name": "action-jsts-quality",
   "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
   "dependencies": {
-    "@reloaddk/daft": "^1.3.1"
+    "eslint": "^9.0.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.31.0",
+    "prettier": "^3.4.2"
   },
   "overrides": {
     "cross-spawn": "^7.0.5"
+  },
+  "devDependencies": {
+    "eslint-formatter-checkstyle": "^9.0.1"
   }
 }
