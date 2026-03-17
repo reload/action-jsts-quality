@@ -1,11 +1,18 @@
 {
   "name": "action-jsts-quality",
   "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
   "dependencies": {
-    "eslint": "^8.0.0",
-    "eslint-config-prettier": "^8.8.0",
-    "eslint-plugin-import": "^2.27.5",
-    "prettier": "^3.0.0"
+    "eslint": "^9.0.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.31.0",
+    "prettier": "^3.4.2"
   },
   "overrides": {
     "cross-spawn": "^7.0.5"
