@@ -1,3 +1,10 @@
 {
-  "extends": ["plugin:@reloaddk/reload/recommended"]
+  "extends": [
+    "eslint:recommended",
+    "plugin:import/recommended",
+    "eslint-config-prettier"
+  ],
+  "rules": {
+    "import/order": "error"
+  }
 }
