@@ -1,14 +1,14 @@
 import js from "@eslint/js";
-import importPlugin from "eslint-plugin-import";
+import { flatConfigs } from "eslint-plugin-import-x";
 import prettierConfig from "eslint-config-prettier";
 
 export default [
   js.configs.recommended,
-  importPlugin.flatConfigs.recommended,
+  flatConfigs.recommended,
   prettierConfig,
   {
     rules: {
-      "import/order": "error",
+      "import-x/order": "error",
     },
   },
 ];
